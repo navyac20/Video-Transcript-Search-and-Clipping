@@ -1,0 +1,819 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Video Transcript Search and Clipping</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dba1d8b0-4588-4398-b0bf-02dd3c926ef5" class="page sans"><header><h1 class="page-title">Video Transcript Search and Clipping</h1><p class="page-description"></p></header><div class="page-body"><p id="96670bd9-a344-45a4-944b-3472e51ef2ac" class="">In today&#x27;s digital age, engaging video content is not just about creativity but also about strategy and technology. Whether you&#x27;re a content creator aiming for virality or a business looking to engage more deeply with your audience, understanding how to effectively manage, search, and optimize long-form videos is crucial. This post explores cutting-edge AI techniques that can transform lengthy videos into compelling, shareable clips, complete with organized chapters and summaries.<br/><br/></p><h2 id="887e7ec9-f5b8-496b-89cd-6a6be5849216" class="">1. Video Search and clipping: Creating viral content</h2><p id="44daa19c-b2be-4168-a7cd-1220809c4c6f" class="">To create content that captures attention and resonates with audiences, we leverage a powerful stack of AI technologies. Here’s how we do it:</p><ul id="2b299896-d8a1-4153-8d4e-a4dba0ddd5e8" class="bulleted-list"><li style="list-style-type:disc">Large Language Models (LLMs) for content analysis and summarization</li></ul><ul id="0a75b7ab-a83d-4aaf-bcc6-5f484c16b2bb" class="bulleted-list"><li style="list-style-type:disc">Sentence transformer for semantic encoding</li></ul><ul id="f9af9778-8b06-4bca-83d1-f8929201e656" class="bulleted-list"><li style="list-style-type:disc">Chroma DB for vector similarity search</li></ul><ul id="e5ec4c16-caf7-4712-9dde-270a43b38305" class="bulleted-list"><li style="list-style-type:disc">FFmpeg for video processing</li></ul><h3 id="6083e842-258f-4dde-a796-e909820bb1d2" class=""><br/><br/><strong>1.1 Transcription and Summarization</strong></h3><p id="f30b796d-ebce-4d44-b175-5b1195afd51c" class="">The process begins with a detailed transcription of the original video in JSON format. This transcription serves as the basis for our content analysis.</p><p id="870f2645-0596-4962-aa0d-924744d85c2f" class="">
+</p><p id="b75134da-1bd2-43f3-855b-a9ce13356ffb" class=""><strong>LLM- Powered Summarization</strong><br/>We utilize Large Language Models (LLMs) to generate impactful summaries of the transcribed content. The key to this step is crafting effective prompts that guide the AI in identifying potentially viral segments.<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f8b694e2-0325-41e2-810c-cb096ee04ecf" class="code"><code class="language-JavaScript">prompts = {
+    &quot;sys_prompt&quot;: &quot;You are an assistant focused on creating viral content. You provide brief and impactful summaries without any unnecessary details.&quot;,
+    &quot;prompt&quot;: &quot;&quot;&quot;
+    From the following text, identify and extract segments that possess strong storytelling elements, descriptive language, and high potential for audience engagement.
+    \nLook for segments that align with current social media trends, evoke strong emotional connections, and offer entertainment value.
+    \nSelect the top segments that you believe have the highest potential to go viral. 
+    \nProvide a 2-3 line summary after combining all the top selected segments. 
+    \nProvide the summary in JSON format with key as &#x27;summary&#x27; and value as the output. 
+    \n\n You are strictly not allowed to use backticks or any other formatting.: {text}
+    &quot;&quot;&quot;,
+    &quot;res_format&quot;: &#x27;{&quot;summary&quot;:&quot;&lt;summary&gt;&quot;}&#x27;
+}</code></pre><p id="3498ec8e-24f5-4cd3-bf54-269799bfd733" class="">This prompt is designed to guide the LLM in identifying key elements that contribute to content virality, such as emotional resonance, current trends, and compelling storytelling.<br/><br/><br/><strong>Integration with LangChain</strong><br/>We integrate the LLM into our pipeline using a library like LangChain. Here’s an example:<br/><br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f02d1105-a0d5-419b-b4f2-d132baa83da3" class="code"><code class="language-JavaScript">from langchain_openai import AzureChatOpenAI
+
+llm = AzureChatOpenAI(
+    api_key=OPENAI_API_KEY,
+    api_version=OPENAI_API_VERSION,
+    azure_endpoint=AZURE_OPENAI_ENDPOINT,
+    azure_deployment=DEPLOYMENT_NAME,
+    model_kwargs={&quot;response_format&quot;:{ &quot;type&quot;: &quot;json_object&quot; }}
+)
+
+response = llm.invoke([SystemMessage(content=prompts[&quot;sys_prompt&quot;]),
+                       HumanMessage(content=prompts[&quot;prompt&quot;].format(text=transcription))])
+summary = json.loads(response.content)[&#x27;summary&#x27;]</code></pre><h3 id="b0433cc3-4be1-4c8b-a351-1a3c23163d2f" class=""><br/><br/><strong>1.2 Semantic Encoding with Sentence Transformers</strong></h3><p id="47bb66ff-85e5-4658-952a-688ae6cce911" class="">To enable efficient similarity search, we use Sentence Transformers to convert text into dense vector representations. We use the &quot;all-MiniLM-L6-v2&quot; model:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ebf431e9-a518-43da-827b-5f20a7828941" class="code"><code class="language-JavaScript">from sentence_transformers import SentenceTransformer
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)</code></pre><p id="c590f75e-70aa-4bfc-847e-0048eeed9605" class=""><br/><br/><strong>Encoding Process</strong></p><p id="c8a7a906-565a-41f6-8866-dacc9ff03236" class="">We encode both the LLM-generated summary and the original transcription:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="82b1a410-538a-4c25-8746-d51e0c743351" class="code"><code class="language-JavaScript">summary_embedding = model.encode(summary)
+transcription_embeddings = model.encode(sentences)</code></pre><p id="74d87bae-a913-4ba5-ae8d-7a1aade17b83" class="">This function creates a Chroma DB index using sentence embeddings generated by the SentenceTransformer model. It processes the transcription JSON file and adds each sentence as a document to the collection.</p><p id="96e15c4a-41c5-4746-9d7e-9b3f0c8f8d5f" class="">
+</p><h3 id="36941360-d742-4261-a473-6e1ffa848280" class="">1.3 <strong>Vector Similarity Search with Chroma DB</strong></h3><p id="498217fe-0450-491e-847a-fd5f409b7247" class="">Chroma DB serves as our vector database, enabling efficient storage and retrieval of high-dimensional embeddings.</p><p id="11de9d78-30b7-4a5c-b2a0-e8a35007ac49" class=""><br/><br/><strong>Initializing Chroma DB<br/><br/></strong>We set up a persistent Chroma DB client and create a collection for our data:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="00842c52-61d9-4de7-b0aa-9e3eeb2672cf" class="code"><code class="language-JavaScript">import chromadb
+
+chroma_client = chromadb.PersistentClient(path=index_path)
+collection = chroma_client.create_collection(name=collection_name, metadata={&quot;hnsw:space&quot;: &quot;cosine&quot;})</code></pre><p id="68a23ce4-1839-42a3-8314-05f45a282a1c" class=""><br/>Then, we add our encoded sentences to the Chroma DB collection:<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d5e0ac54-1513-408e-b05c-6c19b7520d5f" class="code"><code class="language-JavaScript">for sentence, embedding in zip(sentences, transcription_embeddings):
+    collection.add(
+        ids=[str(uuid.uuid4())],
+        embeddings=[embedding.tolist()],
+        metadatas=[{&quot;text&quot;: sentence}]
+    )</code></pre><p id="e264b5f9-ce28-4937-8b5e-972b9b39fe16" class=""><strong>Querying Chroma DB</strong></p><p id="ebcfda23-42d4-4e17-b84c-3005e8a8a3a0" class="">To extract the most relevant content, we query the Chroma DB index using our generated summary:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0925d3be-1b02-4a86-b05e-9e0882fcaa01" class="code"><code class="language-JavaScript">results = collection.query(
+    query_embeddings=[summary_embedding.tolist()],
+    n_results=10
+)</code></pre><p id="75e8df09-ce39-419c-838f-8ff37825a3b4" class="">This returns the top 10 most similar segments from the original transcription.</p><h3 id="21c44fd3-1ff3-42e8-a55e-1a5f440bc91f" class=""><br/><br/><strong>1.4 Video Processing</strong></h3><p id="a96c6e42-a4d1-4957-a095-2fea351c7534" class="">FFmpeg is the backbone of our video processing capabilities. We use it for two main tasks: cutting video segments and concatenating them.</p><p id="7d200da9-65e0-47c1-89f8-796db32c9b07" class=""><br/><br/><strong>Cutting Video Chunks/segments</strong></p><p id="b2f58e6c-e74a-49a3-9fcd-9feb9dd88134" class="">We use FFmpeg&#x27;s cutting capabilities to extract specific segments from the original video:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2aa0e5ef-4a15-4e97-9de5-4150610c6dba" class="code"><code class="language-JavaScript">def cut_video(params):
+    video_cut_command = [
+        &quot;ffmpeg&quot;,
+        &quot;-hide_banner&quot;,
+        &quot;-y&quot;,
+        &quot;-i&quot;, params[&quot;video_path&quot;],
+        &quot;-ss&quot;, params[&quot;start_time&quot;],
+        &quot;-to&quot;, params[&quot;end_time&quot;],
+        &quot;-vf&quot;, f&quot;scale={scaled_resolution}&quot;,
+        &quot;-async&quot;, &quot;1&quot;,
+        &quot;-threads&quot;, str(N_THREADS),
+        params[&quot;output_path&quot;]
+    ]
+    subprocess.run(video_cut_command, check=True)</code></pre><p id="ecc919b9-e9fe-480d-b445-1570b11fafe4" class="">This function constructs and executes an FFmpeg command to cut a segment from the video, maintaining quality and adjusting resolution if necessary.</p><p id="7f97d956-a36f-451f-a4cd-c1d36b1bd942" class=""><br/><br/><strong>Concatenating Video Chunks/segments</strong><br/>Finally, we concatenate the relevant video chunks to create our viral video:<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4e0f7342-db04-44c9-9398-a400e2f9ec22" class="code"><code class="language-JavaScript">def concat_videos_demuxer(vids, output_path):
+    inputs = [f&quot;file &#x27;{x}&#x27;&quot; for x in vids]
+    with open(&quot;clips.txt&quot;, &quot;w&quot;) as f:
+        f.write(&quot;\n&quot;.join(inputs))
+    
+    concat_command = [
+        &quot;ffmpeg&quot;,
+        &quot;-f&quot;, &quot;concat&quot;,
+        &quot;-safe&quot;, &quot;0&quot;,
+        &quot;-i&quot;, &quot;clips.txt&quot;,
+        &quot;-vf&quot;, &quot;select=concatdec_select&quot;,
+        &quot;-af&quot;, &quot;aselect=concatdec_select,aresample=async=1&quot;,
+        output_path
+    ]
+    subprocess.run(concat_command, check=True)</code></pre><p id="3fb1fa26-efb0-4ab9-badb-e17e670d8283" class="">This function uses creates a list of inputs and uses FFmpeg’s concat demuxer to smoothly join our video segments.</p><h3 id="83953248-5495-464d-ac62-e86a51b99ea0" class=""><br/><br/><strong>1.5 Extracting contextual Chunks</strong></h3><p id="6a52525e-51cd-4f24-96fb-399579aa608e" class="">To ensure our viral clips maintain coherence and context, we&#x27;ve implemented a extraction process that considers the surrounding content of each identified segment.</p><ul id="66a8b717-77f2-4795-a188-5724ec78c9ad" class="bulleted-list"><li style="list-style-type:disc">Identifying Surrounding Context: For each top-ranked chunk, we now extract N previous and N subsequent chunks. This &quot;context window&quot; helps preserve the flow of ideas and complete any broken sentences.</li></ul><ul id="5978cce3-d52f-45dd-9e42-f5ef23d32784" class="bulleted-list"><li style="list-style-type:disc">Storing Contextual Information: We store the unique IDs of these contextual chunks in a JSON file, creating a comprehensive map of our content.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9542fdf1-564c-4865-ada4-4cd1c56712a2" class="code"><code class="language-JavaScript">def extract_context(top_chunks, all_chunks, n=2):
+    context_map = {}
+    for chunk in top_chunks:
+        chunk_index = all_chunks.index(chunk)
+        start = max(0, chunk_index - n)
+        end = min(len(all_chunks), chunk_index + n + 1)
+        context_map[chunk[&#x27;id&#x27;]] = {
+            &#x27;prev_ids&#x27;: [c[&#x27;id&#x27;] for c in all_chunks[start:chunk_index]],
+            &#x27;next_ids&#x27;: [c[&#x27;id&#x27;] for c in all_chunks[chunk_index+1:end]]
+        }
+    return context_map</code></pre><p id="32f3a11d-f2c7-4f56-ad95-4ed684feee18" class="">This function creates a context map for each top-ranked chunk, including the IDs of N previous and N subsequent chunks.</p><p id="e6a97787-e994-4290-991e-deb3cf957f06" class="">Made the viral video using step 1.4 by including contextual chunks before and after each main segment.<br/><br/></p><h3 id="a8fd41d9-e544-4669-8d4d-ff568143c203" class=""><strong>1.6 Result </strong></h3><p id="2cc58c1f-2e86-4e06-8d95-022b6f92116d" class="">By implementing contextual content approach, we have seen a significant improvement in the quality and coherence of our generated viral clips. <br/>→ Completed Thoughts: By including surrounding chunks, we ensure that sentences and ideas are completed.<br/></p><p id="5aff81ae-9bbc-4b8d-84db-c5363970b95d" class="">→ Flexible Coherence: By adjusting the number of previous and subsequent chunks (N), we can fine-tune the balance between conciseness and context preservation. </p><h2 id="a048d20a-4a68-40ab-aacc-5716718857ec" class="">2. Automated Video chapter generation</h2><h3 id="03bbfe84-c017-42f5-bc2e-4952fe6d5b0f" class=""><strong>2.1 Transcription Analysis and Chapter Extraction</strong></h3><p id="4ecc32a4-329d-4c97-b045-55322a6fba52" class=""><strong>Prompt Engineering for Chapter extraction</strong></p><p id="84f55ac8-bbcb-45bc-9776-ab5b3634fd83" class="">We begin by using a language model to analyze the transcript and identify potential chapter breaks.<br/>Here’s an example of our prompt structure:<br/><br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b63db3d2-c1a8-4d6d-b53f-b915f96d9ce0" class="code"><code class="language-JavaScript">prompts = {
+    &quot;sys_prompt&quot;: &quot;Your task is to analyze the following transcript for changes in topic or tone and divide it into chapters based on the changes, ensuring full coverage of the transcript and uniqueness of each section. Use text analysis to identify where these changes occur. Use a JSON format for the output and do not use markdown&quot;,
+    &quot;prompt&quot;: &quot;For the following transcript, follow the steps: \n1) Analyze and read the transcript thoroughly to detect any shifts in topic or tone. These shifts indicate the start of a new chapter. \n2) Divide the transcript into distinct sections at each point of change, making sure to cover the entire transcript. \n3) Make a 7 line summary for each section for what is discussed in that section, capture key discussion or ideas. \n4)Create a tittle which should be short, descriptive for each chapter that reflect the core content discussed in that section of transcript. Keep the titles brief but informative. \5) Make sure to provide the output in JSON format only with the key as the chapter_name and value as their corresponding summary.: {text}&quot;,
+    &quot;res_format&quot;: &#x27;{&quot;Chapter_Title&quot;:&quot;&lt;summary of the chapter&gt;&quot;}&#x27;
+}</code></pre><p id="5b34ef63-da3c-4e2e-adce-8e561361ca22" class="">This prompt instructs the model to identify topic shifts, create summaries, and generate chapter titles.</p><p id="1dc38c25-42e3-4c3f-9b1d-c50b227fed98" class="">
+</p><h3 id="f0286269-0f1a-4dd3-ae78-6695352ddebe" class=""><strong>2.2 Similarity Search for Chapter Segmentation</strong></h3><p id="e9f0de48-93b8-4ce5-883e-695d6943d840" class="">After obtaining initial chapter suggestions, we perform a similarity search across the entire transcript to refine chapter boundaries.</p><p id="38acb0e9-5f8e-422c-88c1-0c5ec3618440" class="">
+</p><p id="a92eff5c-dd9a-4366-b717-566bf80b985d" class=""><strong>Create a Index</strong></p><p id="e185a405-c6d8-4450-a6e7-86285df4094e" class="">We create a searchable index of the transcript using Chroma DB and sentence embeddings:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="731bcf3d-ab41-49ef-a8c6-3a0e09cc28c1" class="code"><code class="language-JavaScript">def index_create(transcription_path, path, name):
+    model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+    index_path = f&quot;{path}/{name}_index&quot;
+    chroma_client = chromadb.PersistentClient(path=index_path)
+    
+    # ... (code to process and add embeddings to the collection)</code></pre><p id="87a6975c-55f5-49a4-affa-5caddd8f56f4" class="">This function processes the transcript, generates embeddings for each sentence, and stores them in a Chroma DB collection.</p><p id="14c75561-61ef-457a-98cb-2807867d25cd" class=""><br/><br/><strong>Querying the Index</strong></p><p id="04f81127-8fe9-4f14-b956-b819456404b5" class="">We implement a query function to find similar segments in the transcript:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7f7f9245-07d4-4421-87c8-038c8c18ce2c" class="code"><code class="language-JavaScript">def index_query(query, transcription_path, collection_name, top_n=10):
+    # ... (code to query the collection and return results)</code></pre><p id="4656234e-8cfd-4acc-8d98-6e7ea6174052" class="">This function allows us to find the most relevant segments for each potential chapter.</p><p id="23186f0a-0255-4128-bbdf-d3fb6d6740d2" class="">
+</p><h3 id="120ccb8d-fcf6-42c6-8c05-aa847fa4c3c6" class=""><strong>2.3  Video Processing</strong></h3><p id="6adee8f9-8f18-4b44-9bc2-492110d444ff" class=""><strong>Cutting Video segments<br/><br/></strong>We use FFmpeg to cut segments of the video based on the identified chapter boundaries:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="39792aa9-53d4-4aa9-9110-595b8d7cc2a1" class="code"><code class="language-JavaScript">def cut_video(params):
+    video_cut_command = [
+        &quot;ffmpeg&quot;,
+        &quot;-hide_banner&quot;,
+        &quot;-y&quot;,
+        &quot;-i&quot;, params[&quot;video_path&quot;],
+        &quot;-ss&quot;, params[&quot;start_time&quot;],
+        &quot;-to&quot;, params[&quot;end_time&quot;],
+        &quot;-vf&quot;, f&quot;scale={params[&#x27;scaled_resolution&#x27;]}&quot;,
+        &quot;-async&quot;, &quot;1&quot;,
+        &quot;-threads&quot;, str(params[&quot;N_THREADS&quot;]),
+        params[&quot;output_path&quot;]
+    ]
+    subprocess.run(video_cut_command, check=True)
+</code></pre><p id="f4ffd744-34f6-4bfe-9a5f-317f95d10f36" class="">This function takes parameters like start and end times to extract specific portions of the video.<br/><br/><br/><strong>Concatenating Video Segments<br/><br/></strong>Finally, we concatenate the relevant video chunks to create our chapter videos:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ee333b54-b4df-4f6c-a41a-63beefa8e811" class="code"><code class="language-JavaScript">def concat_videos_demuxer(vids, output_path):
+    inputs = [f&quot;file &#x27;{x}&#x27;&quot; for x in vids]
+    with open(&quot;clips.txt&quot;, &quot;w&quot;) as f:
+        f.write(&quot;\n&quot;.join(inputs))
+    
+    concat_command = [
+        &quot;ffmpeg&quot;,
+        &quot;-f&quot;, &quot;concat&quot;,
+        &quot;-safe&quot;, &quot;0&quot;,
+        &quot;-i&quot;, &quot;clips.txt&quot;,
+        &quot;-vf&quot;, &quot;select=concatdec_select&quot;,
+        &quot;-af&quot;, &quot;aselect=concatdec_select,aresample=async=1&quot;,
+        output_path
+    ]
+    subprocess.run(concat_command, check=True)
+</code></pre><p id="3110b7a4-7d91-4a9b-ac6a-bd1c5c3e6346" class="">This function takes a list of video paths and combines them into a single output video.</p><p id="b9bbf2ee-bfac-4931-97a1-33c2fcd52af1" class="">
+</p><h3 id="9b739d94-880c-49ef-a50a-f8287a3d3c7a" class="">2.4 Result</h3><ul id="ef9b567e-82cf-42d3-ac6f-318b2f2d35df" class="bulleted-list"><li style="list-style-type:disc"><strong>Non-Sequential Chapters</strong>: The chapters generated by this approach are not necessarily in chronological order. For example, the first chapter might contain content from any part of the original video, including the end.</li></ul><ul id="78d12985-bfa3-41a9-9dd5-aaeae161b193" class="bulleted-list"><li style="list-style-type:disc"><strong>Thematic and Contextual Coherence:</strong> This non-sequential nature arises because the AI-driven chapter generation focuses on thematic and contextual coherence rather than maintaining the chronological order of the video.</li></ul><ul id="b40c4e73-dd50-4479-b1f5-b8fa6b9b0753" class="bulleted-list"><li style="list-style-type:disc"><strong>Matching Summary Elements:</strong> The summary of Chapter 1 may contain elements that match different parts of the video. When the AI identifies similar themes or topics throughout the video, it groups these segments together, even if they occur at different times.</li></ul><ul id="9b7ae5be-a471-40e9-88b2-a183179dd3ad" class="bulleted-list"><li style="list-style-type:disc"><strong>Balancing Thematic and Chronological Order:</strong> Balancing thematic grouping with chronological order can help create a more intuitive and engaging video for the audience, enhancing both understanding and viewer experience.</li></ul><h2 id="3746a885-35dd-49b7-a4bf-c6ecf21aa96c" class="">3. Improved Approach: Sequentially Coherent Chapter Generation</h2><p id="e98b27d6-76b0-4a8a-80ea-904d4454ae17" class="">In our quest to generate more accurate and sequentially coherent video chapters, we&#x27;ve developed an enhanced approach that builds upon our initial method. </p><h3 id="aa4ff608-090e-481b-a663-bfc10a8f9b49" class=""><strong>3.1 Initial Chapter Generation</strong></h3><p id="bb1ae1a4-6557-401a-b192-9858b3be6b31" class="">We begin with our previous approach of using language models to generate initial chapter titles and summaries.<br/><br/></p><h3 id="d6004516-1373-4687-901d-049bd366fd2e" class=""><strong>3.2 Embedding-based Similarity Matching</strong></h3><p id="ba3a2db8-0134-41c0-a2e8-01236a17abe5" class=""><strong>Embedding Generation</strong><br/>We use OpenAI&#x27;s text embedding model to generate vector representations of both chapter summaries and transcript segments:<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7a943c2c-3083-453f-a43e-be28af2d59e4" class="code"><code class="language-JavaScript">def getEmbedding(text, model=&quot;text-embedding-3-small&quot;):
+    text = text.replace(&quot;\n&quot;, &quot; &quot;)
+    return client.embeddings.create(input=[text], model=model).data[0].embedding</code></pre><p id="7631cbc0-99a0-483b-9206-3deaf4830927" class=""><br/><br/><strong>Grouping and Comparison</strong></p><p id="9dd75986-9013-4051-84ac-cb86b2599ab2" class="">We now process the original JSON transcript in groups of 5 segments at a time:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7686c1f4-00ab-4e92-92bd-085bd97f464f" class="code"><code class="language-JavaScript">for i in range(0, len(groups[&#x27;groups&#x27;]), 5):
+    group_5 = groups[&#x27;groups&#x27;][i:i+5]
+    grp_text = &quot; &quot;.join([group[&#x27;en-IN&#x27;] for group in group_5])
+    group_embedding = getEmbedding(grp_text)</code></pre><p id="bdc22c5d-150d-4b56-b7b4-620bfcaafd77" class="">This grouping allows us to consider context when making chapter assignments.<br/><br/><br/><strong>Similarity Calculation</strong></p><p id="de8de45f-c132-43d2-bf1b-73dcef383286" class="">We use cosine similarity to compare each group&#x27;s embedding with the current and next chapter embeddings:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e5bdde7e-5a60-44f6-a41f-cd8957ca0d71" class="code"><code class="language-JavaScript">similarity_current = cosine_similarity([group_embedding], [current_embedding])[0][0]
+similarity_next = cosine_similarity([group_embedding], [next_embedding])[0][0]</code></pre><p id="6881f8fa-6a08-4bbb-a4a6-31dcc3dd2792" class=""><br/><br/><strong>Dynamic Chapter Generation</strong></p><p id="a6d1ed16-44a2-4770-b248-b751c515e5d7" class="">Our algorithm dynamically decides whether to assign a group to the current chapter or move to the next one, this threshold-based approach ensures smooth transitions between chapters while maintaining thematic coherence:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bb4191e-bce6-422c-aa27-82a1daf4caee" class="code"><code class="language-JavaScript">if similarity_next &gt; similarity_current * 1.15:
+    chapter_index += 1</code></pre><h3 id="9ec29c8b-1df7-44ba-ae68-caa4325035f8" class=""><br/><br/><strong>3.3 Chapter Structure Generation</strong></h3><p id="81cb73a6-2afb-4dfa-a6df-c5d8bfa38a28" class="">After assign all groups from original JSON transcript to chapters, we create a structured representation of each chapter which contains start time, end time, speaker id , groups id and a unique id for this new chapter group using uuid.</p><p id="01aed6bd-75d0-48bb-b6c5-4c8c82037f1b" class="">
+</p><h3 id="ef73a1cc-64e7-4be1-8212-b8772f252f35" class=""><strong>3.4 Visualizing Results (SRT File Generation)</strong></h3><p id="b62493f3-ba20-4665-abff-92a330771aee" class="">To visualize our chapters in video players, we generate an SRT (SubRip Subtitle) file:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c1fc2807-a5a9-4c6b-b4f6-3d26b1d08c52" class="code"><code class="language-JavaScript">def convert_st_en(timee):
+    hours = int(timee // 3600)
+    minute = int((timee % 3600) // 60)
+    second_remain = timee % 60
+    millisecond = int((second_remain - int(second_remain)) * 1000)
+    second = int(second_remain)
+    return f&quot;{hours:02}:{minute:02}:{second:02},{millisecond:03}&quot;
+
+def srt_file(st_en_chp, output_path):
+    with open(output_path, &#x27;w&#x27;) as file:
+        for i, (s, e) in enumerate(st_en_chp, 1):
+            start_ = convert_st_en(s)
+            end_ = convert_st_en(e)
+            file.write(f&quot;{i}\n&quot;)
+            file.write(f&quot;{start_} --&gt; {end_}\n&quot;)
+            file.write(f&quot;CHAPTER {i}\n\n&quot;)</code></pre><p id="389b68b8-5245-457a-b6e2-d8b76bc70b45" class="">This SRT file allows us to display chapter markers directly in video players that support this format.</p><h2 id="a9994815-93db-4021-bef8-84f1a5d5ac39" class=""><br/>4. Results and Improvements<br/></h2><ul id="79a6ae16-5422-4e5d-9dac-74c346301250" class="bulleted-list"><li style="list-style-type:disc">Sequential Coherence: Chapters now follow the natural progression of the video content, addressing the non-sequential issue of our previous method.</li></ul><ul id="7c983e98-a09f-4175-b8b5-8b0be57c043d" class="bulleted-list"><li style="list-style-type:disc">Thematic Relevance: By using embedding-based similarity, we ensure that each chapter remains thematically coherent.</li></ul><ul id="3a59f7d2-a12b-4e2b-9c64-a36502dccd0c" class="bulleted-list"><li style="list-style-type:disc">Smooth Transitions: The dynamic threshold for chapter transitions prevents abrupt changes while allowing for natural topic shifts.</li></ul><ul id="fb22f7b0-8b47-42c7-8aa1-e2931d286176" class="bulleted-list"><li style="list-style-type:disc">Metadata-Rich Output: Our JSON output includes detailed information about each chapter, facilitating further processing or analysis.</li></ul><ul id="454c1711-8e4e-4fbd-b10b-81474065e663" class="bulleted-list"><li style="list-style-type:disc">Visual Representation: The generated SRT file allows for easy visualization of chapters in video players.</li></ul><p id="2d117823-0c5d-4fb4-ac6f-8532b48e5bd7" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
